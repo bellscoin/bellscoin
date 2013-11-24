@@ -584,19 +584,19 @@ inline void SetThreadPriority(int nPriority)
     SetThreadPriority(GetCurrentThread(), nPriority);
 }
 #else
-inline pthread_thread CreateThread(void(*pfn)(void*), void* parg, bool fWantHandle=false)
+inline pthread_t CreateThread(void(*pfn)(void*), void* parg, bool fWantHandle=false)
 {
-    pthread_thread hthread = 0;
+    pthread_t hthread = 0;
     int ret = pthread_create(&hthread, NULL, (void*(*)(void*))pfn, parg);
     if (ret != 0)
     {
         printf("Error: pthread_create() returned %d\n", ret);
-        return (pthread_thread)0;
+        return (pthread_t)0;
     }
     if (!fWantHandle)
     {
         pthread_detach(hthread);
-        return (pthread_thread)-1;
+        return (pthread_t)-1;
     }
     return hthread;
 }
