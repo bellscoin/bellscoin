@@ -843,32 +843,42 @@ int64 static GetBlockValue(int nHeight, int64 nFees, uint256 prevHash)
 {
     int64 nSubsidy = 2 * COIN;
 
-    if(nHeight == 1) {nSubsidy = 2000000 * COIN;}
-    
-    else if(nHeight < 64800)
-    
-    {int rand = generateMTRandom(nHeight, 1000);
-		if(rand >= 990){nSubsidy = 10000 * COIN;}
-        else if (rand >= 950){nSubsidy = 1000 * COIN;}
-        else if (rand >= 860){nSubsidy = 500 * COIN;}
-        else if (rand <= 859){nSubsidy = 100 * COIN;}
+    if(nHeight < 101) {
+        nSubsidy = 2 * COIN; //first 100 blocks have minimal rewards
+    } else {
+        int rand = generateMTRandom(nHeight, 1000);
+        if (nHeight < 64800) {
+            if(rand >= 990) {
+                nSubsidy = 10000 * COIN;
+            } else if (rand >= 940) {
+                nSubsidy = 1000 * COIN;
+            } else if (rand >= 840) {
+                nSubsidy = 500 * COIN;
+            } else if (rand <= 839) {
+                nSubsidy = 100 * COIN;
+            }
+        } else if(nHeight < 129600) {
+            if (rand >= 990) {
+                nSubsidy = 5000 * COIN;
+            } else if (rand >= 940) {
+                nSubsidy = 500 * COIN;
+            } else if (rand >= 840) {
+                nSubsidy = 250 * COIN;
+            } else if (rand <= 839) {
+                nSubsidy = 50 * COIN;
+            }
+        } else if(nHeight < 259200) {
+	    if (rand >= 990) {
+                nSubsidy = 500 * COIN;
+            } else if (rand >= 940) {
+                nSubsidy = 50 * COIN;
+            } else if (rand >= 840) {
+                nSubsidy = 25 * COIN;
+            } else if (rand <= 839) {
+                nSubsidy = 5 * COIN;
+            }
+        } 
     }
-	else if(nHeight < 129600)
-	 {int rand = generateMTRandom(nHeight, 1000);
-		if(rand >= 990){nSubsidy = 5000 * COIN;}
-        else if (rand >= 950){nSubsidy = 500 * COIN;}
-        else if (rand >= 860){nSubsidy = 250 * COIN;}
-        else if (rand <= 859){nSubsidy = 50 * COIN;}
-    }
-    else if(nHeight < 259200)
-	 {int rand = generateMTRandom(nHeight, 1000);
-		if(rand >= 990){nSubsidy = 100 * COIN;}
-        else if (rand >= 950){nSubsidy = 50 * COIN;}
-        else if (rand >= 860){nSubsidy = 25 * COIN;}
-        else if (rand <= 859){nSubsidy = 5 * COIN;}
-    }
-	else {nSubsidy = 2 * COIN;}
-	
     return nSubsidy + nFees;
 }
 
