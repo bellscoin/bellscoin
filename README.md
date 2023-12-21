@@ -19,4 +19,6 @@ Total of 500,000,000 coins, special rewards system.
 
 Halving at 129600 (~90 days)
 Decreasing by 4/5ths at 259200 blocks (~180 days)
-After block 518,400 (~1 year), reward of 2 coins.
+After block 518,400 (~1 year), reward of 2 coins. 
+
+Walletnotify added in
